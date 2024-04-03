@@ -2,10 +2,9 @@ import cv2
 import streamlit as st
 from ultralytics import YOLO
 
-# Replace the relative path to your weight file
 model_path = "weights/yolov8n.pt"
 
-# Setting page layout
+
 st.set_page_config(
     page_title="Object Detection using YOLOv8",  # Setting page title
     page_icon="🤖",     # Setting page icon
@@ -34,15 +33,15 @@ except Exception as ex:
     st.error(
         f"Unable to load model. Check the specified path: {model_path}")
     st.error(ex)
-# st.write("Model loaded successfully!")
+
 
 if uploaded_file is not None:
     source_vid = uploaded_file.name
 elif source_vid == "Webcam":
-    source_vid = 0
+    source_vid = 0  # Use 0 to indicate the default webcam
 
 if source_vid is not None:
-    vid_cap = cv2.VideoCapture(str(source_vid))
+    vid_cap = cv2.VideoCapture(source_vid)
     
     if st.sidebar.button('Detect Objects'):
         st_frame = st.empty()
@@ -61,4 +60,3 @@ if source_vid is not None:
             else:
                 vid_cap.release()
                 break
-
